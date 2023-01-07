@@ -9,12 +9,25 @@ import defineLocale from '../config/defineLocale';
 import CalendarBottomButtons from '../components/CalendarBottomButtons';
 import uuid from 'react-uuid';
 import {format} from 'date-fns';
+import {ko} from 'date-fns/locale';
 
 defineLocale();
 
 export default function CalendarScreen({navigation}) {
+  const today = new Date();
+  const formattedYear = format(today, 'y', {locale: ko});
+  const formattedMonth = format(today, 'MMMM', {locale: ko});
+
+  const Title = () => {
+    return (
+      <Text style={styles.header}>
+        {formattedYear}년{'\t'}
+        {formattedMonth}
+      </Text>
+    );
+  };
+
   const data = useDataContext();
-  console.log(data);
 
   const [selectedDate, setSelectedDate] = useState({
     dateString: format(new Date(), 'yyyy-MM-dd'),
@@ -57,6 +70,9 @@ export default function CalendarScreen({navigation}) {
             onDayPress={day => {
               setSelectedDate(day.dateString);
             }}
+            renderHeader={date => {
+              return <Title />;
+            }}
           />
         }
         footer={
@@ -72,5 +88,6 @@ export default function CalendarScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  header: {fontSize: 18, fontWeight: 'bold', color: 'black'},
   block: {flex: 1, backgroundColor: themeColors.calendarScreenBackgroundColor},
 });

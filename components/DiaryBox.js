@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {themeColors} from '../assets/color/colors';
 
@@ -9,6 +9,12 @@ export default function DiaryBox({
   onChangeText,
   onchangeTitle,
 }) {
+  const bodyRef = useRef();
+
+  const onSubmitEditing = () => {
+    bodyRef.current.focus();
+  };
+
   return (
     <View style={styles.block}>
       {mode === true ? (
@@ -31,6 +37,7 @@ export default function DiaryBox({
               autoFocus
               onChangeText={onchangeTitle}
               numberOfLines={1}
+              onSubmitEditing={onSubmitEditing}
             />
           </View>
           <View style={styles.textInputContentContainer}>
@@ -39,6 +46,7 @@ export default function DiaryBox({
               style={styles.textInputContent}
               value={content}
               onChangeText={onChangeText}
+              ref={bodyRef}
             />
           </View>
         </>

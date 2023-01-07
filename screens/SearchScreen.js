@@ -11,10 +11,14 @@ export default function SearchScreen() {
   const re = /\s+/;
   const text_Search = text.replace(re, '');
 
-  const filteredData = data.filter(
-    item =>
-      item.title.includes(text_Search) || item.content.includes(text_Search),
-  );
+  const filteredData =
+    text_Search === ''
+      ? []
+      : data.filter(
+          item =>
+            item.title.includes(text_Search) ||
+            item.content.includes(text_Search),
+        );
 
   const onChangeText = t => {
     setText(t);
@@ -28,7 +32,13 @@ export default function SearchScreen() {
         onChangeText={onChangeText}
         value={text}
       />
-      <ItemsList data={filteredData} />
+      {text === '' ? (
+        <Text>검색어를 입력하세요.</Text>
+      ) : filteredData.length === 0 ? (
+        <Text>검색 결과가 없습니다.</Text>
+      ) : (
+        <ItemsList data={filteredData} />
+      )}
     </View>
   );
 }

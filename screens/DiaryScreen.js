@@ -62,7 +62,7 @@ export default function DiaryScreen({route, navigation}) {
   });
 
   return (
-    <KeyboardAvoidingView style={{flex: 1}}>
+    <KeyboardAvoidingView style={styles.keyboardAvoiding}>
       <View style={styles.block}>
         <DiaryBox
           content={content}
@@ -91,6 +91,9 @@ export default function DiaryScreen({route, navigation}) {
 }
 
 const styles = StyleSheet.create({
+  keyboardAvoiding: {
+    flex: 1,
+  },
   block: {flex: 1, backgroundColor: themeColors.diaryScreenBackgroundColor},
   wrapper: {
     width: 40,
